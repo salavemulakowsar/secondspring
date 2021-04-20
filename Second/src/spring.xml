@@ -12,5 +12,9 @@
  -->   
    
    <context:component-scan base-package="basics.annotations"></context:component-scan>
+   <bean id = "t" class = "basics.annotations.Tyre"> 
+   		<property name="brand" value="MRF"></property>
+   </bean>
+   
    
    </beans>
