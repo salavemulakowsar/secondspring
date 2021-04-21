@@ -1,9 +1,11 @@
 package aopmain;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -37,26 +39,33 @@ public class LoggingAspect {
 		 * 
 		 * } }
 		 */
-	@AfterReturning("allCircleMethods()")
-	public void adviceAfterCircleMethodsComplete()
-	{
-		System.out.println("after a circle method returns");
-	}
-	@AfterThrowing("args(name)")
-	public void adviceAfterExceptionThrown(String name)
-	{
-		System.out.println("advice after exception is thrown:"+name);
-	}
-  @AfterReturning(pointcut="args(name)",returning="returnString")
-  public void StringArgsMethods(String name,String returnString)
-  {
-	  System.out.println("i/p String="+name+"\n o/p String="+returnString);
-  }
+		/*
+		 * @AfterReturning("allCircleMethods()") public void
+		 * adviceAfterCircleMethodsComplete() {
+		 * System.out.println("after a circle method returns"); }
+		 * 
+		 * @AfterThrowing("args(name)") public void adviceAfterExceptionThrown(String
+		 * name) { S
+		 ystem.out.println("advice after exception is thrown:"+name);
+	}*/
+
+	/*
+	 * @AfterReturning(pointcut="args(name)", returning="returnString")
+	 * 
+	 * public void StringArgsMethods(String name,String returnString) {
+	 * System.out.println("i/p String ="+name +"\n o/p String="+returnString); }
+	 */
+	/*
+	 * @AfterThrowing(pointcut="args(name)",throwing="ex") public void
+	 * exceptionAdvice(String name, RuntimeException ex) {
+	 * System.out.println("Exception is being thrown:"+ex); }
+	 */
 	
 	 @Pointcut("execution(* aopmodel..*.get*())") public void allGetters() {}
 	 
 		@Pointcut("within(aopmodel.Circle)")
 		public void allCircleMethods() {}
+	
 		
 		/*
 		 * @Before("methodsStringArgs(name)") public void stringArgsAdvice(String name)
@@ -67,5 +76,18 @@ public class LoggingAspect {
 
 		@Pointcut("args(name)")
 		public void methodsStringArgs(String name) {}
+		@Around("allGetters()")
+		public void myAroundAdvice(ProceedingJoinPoint pjp) 
+		{
+		try {
+			System.out.println("before advice");
+			pjp.proceed();
+			System.out.println("after method returns advice");
+		} 
+		catch (Throwable e) {
+			System.out.println("after throwing");
+		}
+		System.out.println("finally advice");
+		}	
 		
 }
