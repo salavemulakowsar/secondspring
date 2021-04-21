@@ -1,6 +1,9 @@
 package aopmain;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -20,26 +23,45 @@ public class LoggingAspect {
 		//@Before("execution(public * aop.model.*.getName())")  --- irrespective of return type
 		//@Before("execution(public * aop.model.*.get*())")   --- for all methods which start with get
 		
-		  @Before("execution(* aopmodel..*.get*())") public void loggingAdvice() {
-		 System.out.println("writing log before method is executed"); }
-		  @Before("allCircleMethods()")
-			public void loggingAdvice(JoinPoint joinPoint) {
-				String methodName = joinPoint.toLongString();
-				if(methodName.contains("getDia")) {
-				System.out.println("writing log for getdia method b4 its executed");
-				}
-				else 
-					if(methodName.contains("setName")) {
-						System.out.println("writing log for setName method b4 its executed");
+		/*
+		 * @Before("execution(* aopmodel..*.get*())") public void loggingAdvice() {
+		 * System.out.println("writing log before method is executed"); }
+		 * 
+		 * @Before("allCircleMethods()") public void loggingAdvice(JoinPoint joinPoint)
+		 * { String methodName = joinPoint.toLongString();
+		 * if(methodName.contains("getDia")) {
+		 * System.out.println("writing log for getdia method b4 its executed"); } else
+		 * if(methodName.contains("setName")) {
+		 * System.out.println("writing log for setName method b4 its executed");
+		 * 
+		 * 
+		 * } }
+		 */
+	@AfterReturning("allCircleMethods()")
+	public void adviceAfterCircleMethodsComplete()
+	{
+		System.out.println("after a circle method returns");
+	}
+	@AfterThrowing("args(name)")
+	public void adviceAfterExceptionThrown(String name)
+	{
+		System.out.println("advice after exception is thrown:"+name);
+	}
 
-						
-					}
-			}
-		@Pointcut("execution(* aopmodel..*.get*())")
-		public void allGetters() {}
-		@Pointcut("within(aopmodel.Circle.*)")
+	
+	 @Pointcut("execution(* aopmodel..*.get*())") public void allGetters() {}
+	 
+		@Pointcut("within(aopmodel.Circle)")
 		public void allCircleMethods() {}
 		
-		
+		/*
+		 * @Before("methodsStringArgs(name)") public void stringArgsAdvice(String name)
+		 * { System.out.
+		 * println("advice for all methods which accept a string as an argument "+name);
+		 * }
+		 */
+
+		@Pointcut("args(name)")
+		public void methodsStringArgs(String name) {}
 		
 }
