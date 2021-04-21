@@ -47,7 +47,11 @@ public class LoggingAspect {
 	{
 		System.out.println("advice after exception is thrown:"+name);
 	}
-
+  @AfterReturning(pointcut="args(name)",returning="returnString")
+  public void StringArgsMethods(String name,String returnString)
+  {
+	  System.out.println("i/p String="+name+"\n o/p String="+returnString);
+  }
 	
 	 @Pointcut("execution(* aopmodel..*.get*())") public void allGetters() {}
 	 
