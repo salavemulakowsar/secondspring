@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"  
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
-    xmlns:aop="http://www.springframework.org/schema/aop"  
-    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
     http://www.springframework.org/schema/aop   
-    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">  
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">
 
-	<aop:aspectj-autoproxy/>
-	
+	<aop:aspectj-autoproxy />
+
 	<bean name="loggingAspect" class="aopmain.LoggingAspect"></bean>
 
 	<bean name="circle" class="aopmodel.Circle">
-		<property name="name" value="circle"></property>
+		<!-- <property name="name" value="semi circle"></property> -->
 	</bean>
 	<bean name="triangle" class="aopmodel.Triangle">
 		<property name="name" value="equvilateral triangle"></property>
@@ -20,9 +20,16 @@
 
 	<bean name="shapeService" class="aopmain.ShapeService"
 		autowire="byName"></bean>
-		
 
-	
-	
+	<aop:config>
+		<aop:aspect id="loggingAspect" ref="loggingAspect">
+			<aop:pointcut
+				expression="execution(* aopmodel..*.get*())" id="allGetters"></aop:pointcut>
+			<aop:around method="myAroundAdvice" pointcut-ref="allGetters"></aop:around>
+
+		</aop:aspect>
+	</aop:config>
+
+
 
 </beans>

@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
-@Aspect
+//@Aspect
 public class LoggingAspect {
 	//one aspect can contain multiple advices
 	
@@ -76,7 +76,7 @@ public class LoggingAspect {
 
 		@Pointcut("args(name)")
 		public void methodsStringArgs(String name) {}
-		@Around("@annotation(aopmodel.Loggable)")
+		//@Around("@annotation(aopmodel.Loggable)")
 		//@Around("allGetters()")
 		public void myAroundAdvice(ProceedingJoinPoint pjp) 
 		{
