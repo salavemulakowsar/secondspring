@@ -8,6 +8,7 @@ public class Circle {
 	 */
 	
 	public String getName() {
+		System.out.println("I am the circles getter method");
 		return name;
 		//throw new RuntimeException();
 	}

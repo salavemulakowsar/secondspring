@@ -10,8 +10,12 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
-//@Aspect
+@Aspect
 public class LoggingAspect {
+	public void myLoggingAdvice()
+	{
+		System.out.println("my logging advice");
+	}
 	//one aspect can contain multiple advices
 	
 		//@Before("execution(* aop.model..*.*(..))")   --- for all methods of all classes present in this package and its subpackages
