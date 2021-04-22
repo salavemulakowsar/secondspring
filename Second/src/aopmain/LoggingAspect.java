@@ -76,7 +76,8 @@ public class LoggingAspect {
 
 		@Pointcut("args(name)")
 		public void methodsStringArgs(String name) {}
-		@Around("allGetters()")
+		@Around("@annotation(aopmodel.Loggable)")
+		//@Around("allGetters()")
 		public void myAroundAdvice(ProceedingJoinPoint pjp) 
 		{
 		try {

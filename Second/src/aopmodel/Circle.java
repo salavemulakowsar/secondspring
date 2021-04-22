@@ -8,11 +8,12 @@ public class Circle {
 	 */
 	
 	public String getName() {
-		throw new RuntimeException();
+		return name;
+		//throw new RuntimeException();
 	}
 
 	public void setName(String name) {
-		//System.out.println("setting name for circle");
+		System.out.println("setting name for circle");
 		this.name = name;
 		//throw new RuntimeException();
 	}
